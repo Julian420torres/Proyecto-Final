@@ -36,7 +36,7 @@ class ProductoController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(): View
+    public function create()
     {
 
 
@@ -53,7 +53,7 @@ class ProductoController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreProductoRequest $request): RedirectResponse
+    public function store(StoreProductoRequest $request)
     {
         //dd($request);
         try {
@@ -102,7 +102,7 @@ class ProductoController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Producto $producto): View
+    public function edit(Producto $producto)
     {
 
 
@@ -119,7 +119,7 @@ class ProductoController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateProductoRequest $request, Producto $producto): RedirectResponse
+    public function update(UpdateProductoRequest $request, Producto $producto)
     {
         try {
             DB::beginTransaction();
@@ -162,7 +162,7 @@ class ProductoController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id): RedirectResponse
+    public function destroy(string $id)
     {
         $message = '';
         $producto = Producto::find($id);

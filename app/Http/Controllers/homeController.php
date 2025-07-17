@@ -9,7 +9,7 @@ use Illuminate\Contracts\View\View;
 
 class homeController extends Controller
 {
-    public function index(): View
+    public function index()
     {
         if (!Auth::check()) {
             return view('welcome');

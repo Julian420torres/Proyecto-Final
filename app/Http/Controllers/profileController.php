@@ -23,7 +23,7 @@ class profileController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): View
+    public function index()
     {
         $user = User::find(Auth::user()->id);
         return view('profile.index', compact('user'));
@@ -64,7 +64,7 @@ class profileController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $profile): RedirectResponse
+    public function update(Request $request, User $profile)
     {
         $request->validate([
             'name' => 'required',

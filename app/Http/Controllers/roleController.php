@@ -22,7 +22,7 @@ class roleController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): View
+    public function index()
     {
         $roles = Role::all();
         return view('role.index', compact('roles'));
@@ -31,7 +31,7 @@ class roleController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(): View
+    public function create()
     {
         $permisos = Permission::all();
         return view('role.create', compact('permisos'));
@@ -40,7 +40,7 @@ class roleController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request)
     {
         $request->validate([
             'name' => 'required|unique:roles,name',
@@ -75,7 +75,7 @@ class roleController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Role $role): View
+    public function edit(Role $role)
     {
         $permisos = Permission::all();
         return view('role.edit', compact('role', 'permisos'));
@@ -84,7 +84,7 @@ class roleController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Role $role): RedirectResponse
+    public function update(Request $request, Role $role)
     {
         $request->validate([
             'name' => 'required|unique:roles,name,' . $role->id,
@@ -115,7 +115,7 @@ class roleController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id): RedirectResponse
+    public function destroy(string $id)
     {
         Role::where('id', $id)->delete();
 

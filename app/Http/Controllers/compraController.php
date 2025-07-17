@@ -26,7 +26,7 @@ class compraController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): View
+    public function index()
     {
         $compras = Compra::with('comprobante')
             ->where('estado', 1)
@@ -39,7 +39,7 @@ class compraController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(): View
+    public function create()
     {
 
         $comprobantes = Comprobante::all();
@@ -50,7 +50,7 @@ class compraController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreCompraRequest $request): RedirectResponse
+    public function store(StoreCompraRequest $request)
     {
         try {
             DB::beginTransaction();
@@ -126,7 +126,7 @@ class compraController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id): RedirectResponse
+    public function destroy(string $id)
     {
         Compra::where('id', $id)
             ->update([

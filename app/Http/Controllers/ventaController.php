@@ -28,7 +28,7 @@ class ventaController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): View
+    public function index()
     {
         $ventas = Venta::with(['comprobante', 'cliente.persona', 'user'])
             ->where('estado', 1)
@@ -56,7 +56,7 @@ class ventaController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(): View
+    public function create()
     {
         $subquery = DB::table('compra_producto')
             ->select('producto_id', DB::raw('MAX(created_at) as max_created_at'))
@@ -89,7 +89,7 @@ class ventaController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreVentaRequest $request): RedirectResponse
+    public function store(StoreVentaRequest $request)
     {
         DB::enableQueryLog();
 
@@ -200,7 +200,7 @@ class ventaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id): RedirectResponse
+    public function destroy(string $id)
     {
         Venta::where('id', $id)
             ->update([

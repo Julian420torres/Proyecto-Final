@@ -11,23 +11,23 @@ use Illuminate\Support\Facades\Log;
 
 class MenuController extends Controller
 {
-    public function index(): View
+    public function index()
     {
         $menus = Menu::all();
         return view('menus.index', compact('menus'));
     }
 
-    public function create(): View
+    public function create()
     {
         return view('menus.create');
     }
 
-    public function edit(Menu $menu): View
+    public function edit(Menu $menu)
     {
         return view('menus.edit', compact('menu'));
     }
 
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request)
     {
         // Debug: Ver qué datos llegan
         Log::info('Datos recibidos:', $request->all());
@@ -62,7 +62,7 @@ class MenuController extends Controller
         }
     }
 
-    public function update(Request $request, Menu $menu): RedirectResponse
+    public function update(Request $request, Menu $menu)
     {
         // Debug: Ver qué datos llegan
         Log::info('Datos para actualizar:', $request->all());
@@ -107,7 +107,7 @@ class MenuController extends Controller
         }
     }
 
-    public function destroy(Menu $menu): RedirectResponse
+    public function destroy(Menu $menu)
     {
         try {
             // Eliminar la imagen si existe
