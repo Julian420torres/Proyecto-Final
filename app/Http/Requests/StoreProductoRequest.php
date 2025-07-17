@@ -27,12 +27,12 @@ class StoreProductoRequest extends FormRequest
             'descripcion' => 'nullable|max:255',
             'fecha_vencimiento' => 'nullable|date',
             'img_path' => 'nullable|image|mimes:png,jpg,jpeg|max:2048',
-           
+
             'categorias' => 'required'
         ];
     }
 
-    
+
 
     public function messages()
     {

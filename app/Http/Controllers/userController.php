@@ -6,6 +6,8 @@ use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use Exception;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
@@ -24,7 +26,7 @@ class userController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): View
     {
         $users = User::all();
         return view('user.index', compact('users'));
@@ -33,7 +35,7 @@ class userController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): View
     {
         $roles = Role::all();
         return view('user.create', compact('roles'));
@@ -42,7 +44,7 @@ class userController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreUserRequest $request)
+    public function store(StoreUserRequest $request): RedirectResponse
     {
         try {
             DB::beginTransaction();
@@ -77,7 +79,7 @@ class userController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(User $user)
+    public function edit(User $user): View
     {
         $roles = Role::all();
         return view('user.edit', compact('user', 'roles'));
@@ -86,7 +88,7 @@ class userController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateUserRequest $request, User $user)
+    public function update(UpdateUserRequest $request, User $user): RedirectResponse
     {
         try {
             DB::beginTransaction();
@@ -109,13 +111,13 @@ class userController extends Controller
             DB::rollBack();
         }
 
-        return redirect()->route('users.index')->with('success','Usuario editado');
+        return redirect()->route('users.index')->with('success', 'Usuario editado');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $id): RedirectResponse
     {
         $user = User::find($id);
 
@@ -126,6 +128,6 @@ class userController extends Controller
         //Eliminar usuario
         $user->delete();
 
-        return redirect()->route('users.index')->with('success','Usuario eliminado');
+        return redirect()->route('users.index')->with('success', 'Usuario eliminado');
     }
 }

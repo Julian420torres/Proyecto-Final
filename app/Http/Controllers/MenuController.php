@@ -5,27 +5,29 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\Models\Menu;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Log;
 
 class MenuController extends Controller
 {
-    public function index()
+    public function index(): View
     {
         $menus = Menu::all();
         return view('menus.index', compact('menus'));
     }
 
-    public function create()
+    public function create(): View
     {
         return view('menus.create');
     }
 
-    public function edit(Menu $menu)
+    public function edit(Menu $menu): View
     {
         return view('menus.edit', compact('menu'));
     }
 
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         // Debug: Ver qué datos llegan
         Log::info('Datos recibidos:', $request->all());
@@ -60,7 +62,7 @@ class MenuController extends Controller
         }
     }
 
-    public function update(Request $request, Menu $menu)
+    public function update(Request $request, Menu $menu): RedirectResponse
     {
         // Debug: Ver qué datos llegan
         Log::info('Datos para actualizar:', $request->all());
@@ -105,7 +107,7 @@ class MenuController extends Controller
         }
     }
 
-    public function destroy(Menu $menu)
+    public function destroy(Menu $menu): RedirectResponse
     {
         try {
             // Eliminar la imagen si existe

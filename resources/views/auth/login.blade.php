@@ -34,11 +34,11 @@
                                             </div>
                                         @endforeach
                                     @endif
-                                    <form action="/login" method="post">
+                                    <form action="{{ route('login.login') }}" method="post">
                                         @csrf
                                         <div class="form-floating mb-3">
-                                            <input autofocus autocomplete="off" value=""
-                                                class="form-control" name="email" id="inputEmail" type="email"
+                                            <input autofocus autocomplete="off" value="" class="form-control"
+                                                name="email" id="inputEmail" type="email"
                                                 placeholder="name@example.com" />
                                             <label for="inputEmail">Correo eléctronico</label>
                                         </div>

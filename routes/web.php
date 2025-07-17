@@ -26,11 +26,12 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/',[homeController::class,'index'])->name('panel');
+
+Route::get('/', [homeController::class, 'index'])->name('panel');
 
 Route::resources([
     'categorias' => categoriaController::class,
-    
+
     'productos' => ProductoController::class,
     'clientes' => clienteController::class,
     'menus' => menuController::class,
@@ -41,9 +42,9 @@ Route::resources([
     'profile' => profileController::class
 ]);
 
-Route::get('/login',[loginController::class,'index'])->name('login');
-Route::post('/login',[loginController::class,'login']);
-Route::get('/logout',[logoutController::class,'logout'])->name('logout');
+Route::get('/login', [loginController::class, 'index'])->name('login');
+Route::post('/login', [loginController::class, 'login'])->name('login.login');
+Route::get('/logout', [logoutController::class, 'logout'])->name('logout');
 Route::resource('menus', MenuController::class);
 Route::get('/ventas/obtener-numero-comprobante/{idComprobante}', [VentaController::class, 'obtenerNumeroComprobante']);
 
