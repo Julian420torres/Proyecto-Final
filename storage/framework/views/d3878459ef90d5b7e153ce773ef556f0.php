@@ -1,26 +1,24 @@
-@extends('layouts.app')
+<?php $__env->startSection('title', 'Realizar compra'); ?>
 
-@section('title', 'Realizar compra')
-
-@push('css')
+<?php $__env->startPush('css'); ?>
     <link rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/css/bootstrap-select.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-@endpush
+<?php $__env->stopPush(); ?>
 
-@section('content')
+<?php $__env->startSection('content'); ?>
     <div class="container-fluid px-4">
         <h1 class="mt-4 text-center">Crear Compra</h1>
         <ol class="breadcrumb mb-4">
-            <li class="breadcrumb-item"><a href="{{ route('panel') }}">Inicio</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('compras.index') }}">Compras</a></li>
+            <li class="breadcrumb-item"><a href="<?php echo e(route('panel')); ?>">Inicio</a></li>
+            <li class="breadcrumb-item"><a href="<?php echo e(route('compras.index')); ?>">Compras</a></li>
             <li class="breadcrumb-item active">Crear Compra</li>
         </ol>
     </div>
 
-    <form action="{{ route('compras.store') }}" method="post">
-        @csrf
+    <form action="<?php echo e(route('compras.store')); ?>" method="post">
+        <?php echo csrf_field(); ?>
 
         <div class="container-lg mt-4">
             <div class="row gy-4">
@@ -35,10 +33,11 @@
                             <div class="col-12 mb-4">
                                 <select name="producto_id" id="producto_id" class="form-control selectpicker"
                                     data-live-search="true" data-size="5" title="Busque un producto aquí">
-                                    @foreach ($productos as $item)
-                                        <option value="{{ $item->id }}">{{ $item->codigo . ' ' . $item->nombre }}
+                                    <?php $__currentLoopData = $productos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <option value="<?php echo e($item->id); ?>"><?php echo e($item->codigo . ' ' . $item->nombre); ?>
+
                                         </option>
-                                    @endforeach
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </select>
                             </div>
 
@@ -141,13 +140,20 @@
                                 <label for="comprobante_id" class="form-label">Comprobante:</label>
                                 <select name="comprobante_id" id="comprobante_id" class="form-control selectpicker"
                                     title="Selecciona">
-                                    @foreach ($comprobantes as $item)
-                                        <option value="{{ $item->id }}">{{ $item->tipo_comprobante }}</option>
-                                    @endforeach
+                                    <?php $__currentLoopData = $comprobantes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <option value="<?php echo e($item->id); ?>"><?php echo e($item->tipo_comprobante); ?></option>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </select>
-                                @error('comprobante_id')
-                                    <small class="text-danger">{{ '*' . $message }}</small>
-                                @enderror
+                                <?php $__errorArgs = ['comprobante_id'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                    <small class="text-danger"><?php echo e('*' . $message); ?></small>
+                                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                             </div>
 
                             <!--Numero de comprobante-->
@@ -155,9 +161,16 @@
                                 <label for="numero_comprobante" class="form-label">Numero de comprobante:</label>
                                 <input required type="text" name="numero_comprobante" id="numero_comprobante"
                                     class="form-control">
-                                @error('numero_comprobante')
-                                    <small class="text-danger">{{ '*' . $message }}</small>
-                                @enderror
+                                <?php $__errorArgs = ['numero_comprobante'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                    <small class="text-danger"><?php echo e('*' . $message); ?></small>
+                                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                             </div>
 
                             <!--Impuesto---->
@@ -165,9 +178,16 @@
                                 <label for="impuesto" class="form-label">Impuesto(INC):</label>
                                 <input readonly type="text" name="impuesto" id="impuesto"
                                     class="form-control border-success">
-                                @error('impuesto')
-                                    <small class="text-danger">{{ '*' . $message }}</small>
-                                @enderror
+                                <?php $__errorArgs = ['impuesto'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                    <small class="text-danger"><?php echo e('*' . $message); ?></small>
+                                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                             </div>
 
                             <!--Fecha--->
@@ -181,7 +201,7 @@
 
                                 $fecha_hora = Carbon::now()->toDateTimeString();
                                 ?>
-                                <input type="hidden" name="fecha_hora" value="{{ $fecha_hora }}">
+                                <input type="hidden" name="fecha_hora" value="<?php echo e($fecha_hora); ?>">
                             </div>
 
                             <!--Botones--->
@@ -217,9 +237,9 @@
         </div>
 
     </form>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@push('js')
+<?php $__env->startPush('js'); ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/js/bootstrap-select.min.js"></script>
     <script>
         $(document).ready(function() {
@@ -422,4 +442,6 @@
             })
         }
     </script>
-@endpush
+<?php $__env->stopPush(); ?>
+
+<?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\julia\OneDrive\Escritorio\correcion\Proyecto-Final\resources\views/compra/create.blade.php ENDPATH**/ ?>

@@ -1,27 +1,25 @@
-@extends('layouts.app')
+<?php $__env->startSection('title', 'Realizar venta'); ?>
 
-@section('title', 'Realizar venta')
-
-@push('css')
+<?php $__env->startPush('css'); ?>
     <link rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/css/bootstrap-select.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-@endpush
+<?php $__env->stopPush(); ?>
 
 
-@section('content')
+<?php $__env->startSection('content'); ?>
     <div class="container-fluid px-4">
         <h1 class="mt-4 text-center">Realizar Venta</h1>
         <ol class="breadcrumb mb-4">
-            <li class="breadcrumb-item"><a href="{{ route('panel') }}">Inicio</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('ventas.index') }}">Ventas</a></li>
+            <li class="breadcrumb-item"><a href="<?php echo e(route('panel')); ?>">Inicio</a></li>
+            <li class="breadcrumb-item"><a href="<?php echo e(route('ventas.index')); ?>">Ventas</a></li>
             <li class="breadcrumb-item active">Realizar Venta</li>
         </ol>
     </div>
 
-    <form action="{{ route('ventas.store') }}" method="post">
-        @csrf
+    <form action="<?php echo e(route('ventas.store')); ?>" method="post">
+        <?php echo csrf_field(); ?>
         <div class="container-lg mt-4">
             <div class="row gy-4">
 
@@ -38,12 +36,13 @@
                                 <label for="producto_id">Seleccionar Producto:</label>
                                 <select name="producto_id" id="producto_id" class="form-control selectpicker"
                                     data-live-search="true" data-size="5" title="Busque un producto aquí">
-                                    @foreach ($productos as $item)
-                                        <option value="{{ $item->id }}" data-precio="{{ $item->precio_venta }}"
-                                            data-stock="{{ $item->stock }}">
-                                            {{ $item->codigo . ' ' . $item->nombre }}
+                                    <?php $__currentLoopData = $productos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <option value="<?php echo e($item->id); ?>" data-precio="<?php echo e($item->precio_venta); ?>"
+                                            data-stock="<?php echo e($item->stock); ?>">
+                                            <?php echo e($item->codigo . ' ' . $item->nombre); ?>
+
                                         </option>
-                                    @endforeach
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </select>
                             </div>
 
@@ -53,11 +52,12 @@
                                 <select name="menu_id" id="menu_id" class="form-control selectpicker" data-size="5"
                                     data-live-search="true" title="Busque un menú aquí">
                                     <option value="">Seleccione un menú</option>
-                                    @foreach ($menus as $menu)
-                                        <option value="{{ $menu->id }}" data-precio="{{ $menu->precio }}">
-                                            {{ $menu->nombre }}
+                                    <?php $__currentLoopData = $menus; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $menu): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <option value="<?php echo e($menu->id); ?>" data-precio="<?php echo e($menu->precio); ?>">
+                                            <?php echo e($menu->nombre); ?>
+
                                         </option>
-                                    @endforeach
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </select>
                             </div>
 
@@ -196,13 +196,20 @@
                                 <label for="cliente_id" class="form-label">Cliente:</label>
                                 <select name="cliente_id" id="cliente_id" class="form-control selectpicker show-tick"
                                     data-live-search="true" title="Selecciona" data-size='5'>
-                                    @foreach ($clientes as $item)
-                                        <option value="{{ $item->id }}">{{ $item->persona->razon_social }}</option>
-                                    @endforeach
+                                    <?php $__currentLoopData = $clientes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <option value="<?php echo e($item->id); ?>"><?php echo e($item->persona->razon_social); ?></option>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </select>
-                                @error('cliente_id')
-                                    <small class="text-danger">{{ '*' . $message }}</small>
-                                @enderror
+                                <?php $__errorArgs = ['cliente_id'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                    <small class="text-danger"><?php echo e('*' . $message); ?></small>
+                                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                             </div>
 
                             <!-- Tipo de comprobante -->
@@ -212,13 +219,20 @@
                                     title="Selecciona">
                                     <option value="">Seleccione</option>
                                     <!-- Opción vacía para obligar a seleccionar -->
-                                    @foreach ($comprobantes as $item)
-                                        <option value="{{ $item->id }}">{{ $item->tipo_comprobante }}</option>
-                                    @endforeach
+                                    <?php $__currentLoopData = $comprobantes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <option value="<?php echo e($item->id); ?>"><?php echo e($item->tipo_comprobante); ?></option>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </select>
-                                @error('comprobante_id')
-                                    <small class="text-danger">{{ '*' . $message }}</small>
-                                @enderror
+                                <?php $__errorArgs = ['comprobante_id'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                    <small class="text-danger"><?php echo e('*' . $message); ?></small>
+                                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                             </div>
 
                             <!-- Número de comprobante -->
@@ -226,9 +240,16 @@
                                 <label for="numero_comprobante" class="form-label">Número de comprobante:</label>
                                 <input required type="text" name="numero_comprobante" id="numero_comprobante"
                                     class="form-control" readonly>
-                                @error('numero_comprobante')
-                                    <small class="text-danger">{{ '*' . $message }}</small>
-                                @enderror
+                                <?php $__errorArgs = ['numero_comprobante'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                    <small class="text-danger"><?php echo e('*' . $message); ?></small>
+                                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                             </div>
 
                             <!-- Impuesto -->
@@ -236,9 +257,16 @@
                                 <label for="impuesto" class="form-label">Total Impuesto:</label>
                                 <input readonly type="text" name="impuesto" id="impuesto"
                                     class="form-control border-success">
-                                @error('impuesto')
-                                    <small class="text-danger">{{ '*' . $message }}</small>
-                                @enderror
+                                <?php $__errorArgs = ['impuesto'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                    <small class="text-danger"><?php echo e('*' . $message); ?></small>
+                                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                             </div>
 
                             <!-- Opciones de Impuesto -->
@@ -259,11 +287,11 @@
 
                                 $fecha_hora = Carbon::now()->toDateTimeString();
                                 ?>
-                                <input type="hidden" name="fecha_hora" value="{{ $fecha_hora }}">
+                                <input type="hidden" name="fecha_hora" value="<?php echo e($fecha_hora); ?>">
                             </div>
 
                             <!----User--->
-                            <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
+                            <input type="hidden" name="user_id" value="<?php echo e(auth()->user()->id); ?>">
 
                             <!--Botones--->
                             <div class="col-12 text-center">
@@ -298,9 +326,9 @@
         </div>
 
     </form>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@push('js')
+<?php $__env->startPush('js'); ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/js/bootstrap-select.min.js"></script>
     <script>
         let productoSelect, menuSelect, precioVentaInput, stockInput;
@@ -719,4 +747,6 @@
 
         //Fuente: https://es.stackoverflow.com/questions/48958/redondear-a-dos-decimales-cuando-sea-necesario
     </script>
-@endpush
+<?php $__env->stopPush(); ?>
+
+<?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\julia\OneDrive\Escritorio\correcion\Proyecto-Final\resources\views/venta/create.blade.php ENDPATH**/ ?>
