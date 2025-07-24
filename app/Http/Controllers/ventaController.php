@@ -40,13 +40,21 @@ class ventaController extends Controller
 
     public function obtenerNumeroComprobante($idComprobante)
     {
-        // Buscar la última venta con el mismo tipo de comprobante
-        $ultimoComprobante = Venta::where('comprobante_id', $idComprobante)
-            ->orderBy('id', 'desc')
-            ->first();
+        // Obtener todos los números usados para este tipo de comprobante
+        $numerosUsados = Venta::where('comprobante_id', $idComprobante)
+            ->pluck('numero_comprobante')
+            ->toArray();
 
-        // Si hay un comprobante previo, sumamos 1 al número. Si no, comenzamos desde 1.
-        $nuevoNumero = $ultimoComprobante ? $ultimoComprobante->numero_comprobante + 1 : 1;
+        // Si no hay comprobantes, comenzar desde 1
+        if (empty($numerosUsados)) {
+            return response()->json(['numero_comprobante' => 1]);
+        }
+
+        // Encontrar el primer número disponible (el más bajo no usado)
+        $nuevoNumero = 1;
+        while (in_array($nuevoNumero, $numerosUsados)) {
+            $nuevoNumero++;
+        }
 
         return response()->json(['numero_comprobante' => $nuevoNumero]);
     }
@@ -202,11 +210,30 @@ class ventaController extends Controller
      */
     public function destroy(string $id)
     {
-        Venta::where('id', $id)
-            ->update([
-                'estado' => 0
-            ]);
+        DB::beginTransaction();
+        try {
+            $venta = Venta::find($id);
 
-        return redirect()->route('ventas.index')->with('success', 'Venta eliminada');
+            if ($venta) {
+                // Revertir stock de productos
+                foreach ($venta->productos as $producto) {
+                    $producto->stock += $producto->pivot->cantidad;
+                    $producto->save();
+                }
+
+                // Eliminar relaciones muchos-a-muchos primero
+                $venta->productos()->detach();
+                $venta->menus()->detach();
+
+                // Eliminar físicamente la venta
+                $venta->forceDelete();
+            }
+
+            DB::commit();
+            return redirect()->route('ventas.index')->with('success', 'Venta eliminada permanentemente');
+        } catch (Exception $e) {
+            DB::rollBack();
+            return redirect()->route('ventas.index')->with('error', 'Error al eliminar la venta: ' . $e->getMessage());
+        }
     }
 }
