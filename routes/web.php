@@ -3,6 +3,7 @@
 use App\Http\Controllers\categoriaController;
 use App\Http\Controllers\clienteController;
 use App\Http\Controllers\compraController;
+use App\Http\Controllers\ExportExcelController;
 use App\Http\Controllers\homeController;
 use App\Http\Controllers\loginController;
 use App\Http\Controllers\logoutController;
@@ -41,6 +42,11 @@ Route::resources([
     'roles' => roleController::class,
     'profile' => profileController::class
 ]);
+
+//Reportes
+
+Route::get('/export-excel-vental-all', [ExportExcelController::class, 'exportExcelVentasAll'])
+    ->name('export.excel-ventas-all');
 
 Route::get('/login', [loginController::class, 'index'])->name('login');
 Route::post('/login', [loginController::class, 'login'])->name('login.login');

@@ -30,6 +30,9 @@
                 <a href="{{ route('ventas.create') }}">
                     <button type="button" class="btn btn-primary">Añadir nuevo registro</button>
                 </a>
+                <a href="{{ route('export.excel-ventas-all') }}">
+                    <button type="button" class="btn btn-success">Exportar en excel</button>
+                </a>
             </div>
         @endcan
 

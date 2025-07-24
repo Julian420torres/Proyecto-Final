@@ -1,20 +1,37 @@
+# Dependencias de Node
 /node_modules
 /public/build
 /public/hot
+
+# Archivos generados y de almacenamiento
 /public/storage
 /storage/*.key
-/vendor
+/storage/app/public
+/storage/framework/cache
+/storage/framework/sessions
+/storage/framework/views
+/storage/logs
+/bootstrap/cache
+
+# Entornos
 .env
 .env.backup
 .env.production
+!.env.example
+
+# Archivos temporales y de pruebas
 .phpunit.result.cache
 Homestead.json
 Homestead.yaml
 auth.json
 npm-debug.log
 yarn-error.log
+
+# Configuraciones de IDE
 /.fleet
 /.idea
 /.vscode
-!.env.example
 
+# Archivos del sistema
+.DS_Store
+Thumbs.db
