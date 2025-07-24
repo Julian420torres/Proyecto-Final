@@ -39,7 +39,7 @@
 
                         <div class="col-12">
                             <label for="descripcion" class="form-label">Descripción</label>
-                            <textarea name="descripcion" id="descripcion" class="form-control" required>{{ old('descripcion') }}</textarea>
+                            <textarea name="descripcion" id="descripcion" class="form-control">{{ old('descripcion') }}</textarea>
                             @error('descripcion')
                                 <small class="text-danger">{{ '*' . $message }}</small>
                             @enderror
@@ -56,8 +56,7 @@
 
                         <div class="col-md-6">
                             <label for="imagen" class="form-label">Imagen del Menú</label>
-                            <input type="file" name="imagen" id="imagen" class="form-control" accept="image/*"
-                                required>
+                            <input type="file" name="imagen" id="imagen" class="form-control" accept="image/*">
                             @error('imagen')
                                 <small class="text-danger">{{ '*' . $message }}</small>
                             @enderror
