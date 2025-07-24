@@ -32,7 +32,6 @@ Route::get('/', [homeController::class, 'index'])->name('panel');
 
 Route::resources([
     'categorias' => categoriaController::class,
-
     'productos' => ProductoController::class,
     'clientes' => clienteController::class,
     'menus' => menuController::class,

@@ -14,13 +14,13 @@ class MenuVenta extends Model
     protected $fillable = ['venta_id', 'menu_id', 'cantidad', 'precio_unitario', 'subtotal'];
 
     // Relación con Venta
-    public function ventas(): BelongsTo
+    public function ventas()
     {
         return $this->belongsTo(Venta::class);
     }
 
     // Relación con Menú
-    public function menus(): BelongsTo
+    public function menus()
     {
         return $this->belongsTo(Menu::class);
     }

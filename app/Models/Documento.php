@@ -10,7 +10,7 @@ class Documento extends Model
 {
     use HasFactory;
 
-    public function persona(): HasMany
+    public function persona()
     {
         return $this->hasMany(Persona::class);
     }

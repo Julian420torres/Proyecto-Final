@@ -11,12 +11,12 @@ class Categoria extends Model
 {
     use HasFactory;
 
-    public function productos(): BelongsToMany
+    public function productos()
     {
         return $this->belongsToMany(Producto::class)->withTimestamps();
     }
 
-    public function caracteristica(): BelongsTo
+    public function caracteristica()
     {
         return $this->belongsTo(Caracteristica::class);
     }

@@ -19,19 +19,19 @@ class Producto extends Model
         'img_path'
     ];
 
-    public function compras(): BelongsToMany
+    public function compras()
     {
         return $this->belongsToMany(Compra::class)->withTimestamps()
             ->withPivot('cantidad', 'precio_compra', 'precio_venta');
     }
 
-    public function ventas(): BelongsToMany
+    public function ventas()
     {
         return $this->belongsToMany(Venta::class)->withTimestamps()
             ->withPivot('cantidad', 'precio_venta');
     }
 
-    public function categorias(): BelongsToMany
+    public function categorias()
     {
         return $this->belongsToMany(Categoria::class)->withTimestamps();
     }

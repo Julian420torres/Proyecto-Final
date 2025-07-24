@@ -13,28 +13,28 @@ class Venta extends Model
 
     protected $guarded = ['id'];
 
-    public function cliente(): BelongsTo
+    public function cliente()
     {
         return $this->belongsTo(Cliente::class);
     }
 
-    public function user(): BelongsTo
+    public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    public function comprobante(): BelongsTo
+    public function comprobante()
     {
         return $this->belongsTo(Comprobante::class);
     }
 
-    public function productos(): BelongsToMany
+    public function productos()
     {
         return $this->belongsToMany(Producto::class)->withTimestamps()
             ->withPivot('cantidad', 'precio_venta');
     }
 
-    public function menus(): BelongsToMany
+    public function menus()
     {
         return $this->belongsToMany(Menu::class, 'menu_venta')
             ->withTimestamps()

@@ -10,7 +10,7 @@ class Caracteristica extends Model
 {
     use HasFactory;
 
-    public function categoria(): HasOne
+    public function categoria()
     {
         return $this->hasOne(Categoria::class);
     }
