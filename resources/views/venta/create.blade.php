@@ -38,6 +38,7 @@
                                 <label for="producto_id">Seleccionar Producto:</label>
                                 <select name="producto_id" id="producto_id" class="form-control selectpicker"
                                     data-live-search="true" data-size="5" title="Busque un producto aquí">
+                                    <option value="">Seleccione un producto</option>
                                     @foreach ($productos as $item)
                                         <option value="{{ $item->id }}" data-precio="{{ $item->precio_venta }}"
                                             data-stock="{{ $item->stock }}">
