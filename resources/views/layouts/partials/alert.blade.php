@@ -19,12 +19,3 @@
         })
     </script>
 @endif
-
-@if (session('login'))
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            let message = "{{ session('login') }}";
-            Swal.fire(message);
-        });
-    </script>
-@endif

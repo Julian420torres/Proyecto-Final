@@ -6,8 +6,18 @@
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @endpush
-
 @section('content')
+
+    @if (session('success'))
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+
+                let message = "{{ session('success') }}";
+                Swal.fire(message);
+
+            });
+        </script>
+    @endif
 
 
 

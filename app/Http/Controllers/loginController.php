@@ -29,6 +29,7 @@ class loginController extends Controller
         $user = Auth::getProvider()->retrieveByCredentials($request->only('email', 'password'));
         Auth::login($user);
 
-        return redirect()->route('panel')->with('login', 'Bienvenido ' . $user->name);
+
+        return redirect()->route('panel')->with('success', 'Bienvenido ' . $user->name);
     }
 }
