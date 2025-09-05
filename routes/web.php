@@ -4,6 +4,7 @@ use App\Http\Controllers\categoriaController;
 use App\Http\Controllers\clienteController;
 use App\Http\Controllers\compraController;
 use App\Http\Controllers\ExportExcelController;
+use App\Http\Controllers\ExportPDFController;
 use App\Http\Controllers\homeController;
 use App\Http\Controllers\loginController;
 use App\Http\Controllers\logoutController;
@@ -43,6 +44,8 @@ Route::resources([
 ]);
 
 //Reportes
+Route::get('/export-pdf-comprobante-venta', [ExportPDFController::class, 'exportPdfComprobanteVenta'])
+    ->name('export.pdf-comprobante-venta');
 
 Route::get('/export-excel-vental-all', [ExportExcelController::class, 'exportExcelVentasAll'])
     ->name('export.excel-ventas-all');

@@ -11,7 +11,7 @@
 @endpush
 
 @section('content')
-
+    @include('layouts.partials.alert')
 
     <div class="container-fluid px-4">
         <h1 class="mt-4 text-center">Categorías</h1>
@@ -136,7 +136,8 @@
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary"
                                                 data-bs-dismiss="modal">Cerrar</button>
-                                            <form action="{{ route('categorias.destroy', ['categoria' => $categoria->id]) }}"
+                                            <form
+                                                action="{{ route('categorias.destroy', ['categoria' => $categoria->id]) }}"
                                                 method="post">
                                                 @method('DELETE')
                                                 @csrf

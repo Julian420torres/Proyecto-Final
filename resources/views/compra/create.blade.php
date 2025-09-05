@@ -274,7 +274,8 @@
             $('#inc').html(inc);
             $('#total').html(total);
             $('#impuesto').val(impuesto + '%');
-            $('#inputTotal').val(total);
+            $('#inputTotal').val(total.toFixed(3));
+
 
             limpiarCampos();
             disableButtons();
@@ -328,7 +329,11 @@
                             precioCompra + '</td>' +
                             '<td><input type="hidden" name="arrayprecioventa[]" value="' + precioVenta + '">' +
                             precioVenta + '</td>' +
-                            '<td>' + subtotal[cont] + '</td>' +
+                            '<td>' + subtotal[cont].toLocaleString('es-CO', {
+                                minimumFractionDigits: 0,
+                                maximumFractionDigits: 3
+                            }) + '</td>' +
+
                             '<td><button class="btn btn-danger" type="button" onClick="eliminarProducto(' + cont +
                             ')"><i class="fa-solid fa-trash"></i></button></td>' +
                             '</tr>';
@@ -340,11 +345,23 @@
                         disableButtons();
 
                         //Mostrar los campos calculados
-                        $('#sumas').html(sumas);
-                        $('#inc').html(inc);
-                        $('#total').html(total);
+                        $('#sumas').html(sumas.toLocaleString('es-CO', {
+                            minimumFractionDigits: 0,
+                            maximumFractionDigits: 3
+                        }));
+                        $('#inc').html(inc.toLocaleString('es-CO', {
+                            minimumFractionDigits: 0,
+                            maximumFractionDigits: 3
+                        }));
+                        $('#total').html(total.toLocaleString('es-CO', {
+                            minimumFractionDigits: 0,
+                            maximumFractionDigits: 3
+                        }));
+
+
                         $('#impuesto').val(inc);
-                        $('#inputTotal').val(total);
+                        $('#inputTotal').val(total.toFixed(3));
+
                     } else {
                         showModal('Precio de compra incorrecto');
                     }
@@ -368,11 +385,23 @@
             total = round(sumas + inc);
 
             //Mostrar los campos calculados
-            $('#sumas').html(sumas);
-            $('#inc').html(inc);
-            $('#total').html(total);
+            $('#sumas').html(sumas.toLocaleString('es-CO', {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 3
+            }));
+            $('#inc').html(inc.toLocaleString('es-CO', {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 3
+            }));
+            $('#total').html(total.toLocaleString('es-CO', {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 3
+            }));
+
+
             $('#impuesto').val(inc);
-            $('#InputTotal').val(total);
+            $('#inputTotal').val(total.toFixed(3));
+
 
             //Eliminar el fila de la tabla
             $('#fila' + indice).remove();

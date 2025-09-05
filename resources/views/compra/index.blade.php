@@ -15,6 +15,7 @@
 
 @section('content')
 
+    @include('layouts.partials.alert')
 
     <div class="container-fluid px-4">
         <h1 class="mt-4 text-center">Compras</h1>
@@ -66,8 +67,10 @@
                                     </div>
                                 </td>
                                 <td>
-                                    {{ $item->total }}
+                                    {{ number_format($item->total, 2, ',', '.') }}
+
                                 </td>
+
                                 <td>
                                     <div class="btn-group" role="group" aria-label="Basic mixed styles example">
 

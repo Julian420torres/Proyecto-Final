@@ -11,8 +11,7 @@
 @endpush
 
 @section('content')
-
-
+    @include('layouts.partials.alert')
 
     <div class="container-fluid px-4">
         <h1 class="mt-4 text-center">Menús</h1>
@@ -92,11 +91,18 @@
                                                 aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
-                                            <div class="row">
-                                                <img src="{{ asset('storage/' . $menu->imagen) }}"
-                                                    alt="{{ $menu->nombre }}"
-                                                    class="img-fluid img-thumbnail border border-4 rounded"
-                                                    style="max-width: 100%; height: auto;">
+                                            <div class="row mb-3">
+                                                @if ($menu->imagen)
+                                                    <img src="{{ asset('storage/' . $menu->imagen) }}"
+                                                        alt="{{ $menu->nombre }}"
+                                                        class="img-fluid img-thumbnail border border-4 rounded"
+                                                        style="max-width: 100%; height: auto;">
+                                                @else
+                                                    <div class="text-center py-4 bg-light w-100">
+                                                        <i class="fas fa-image fa-3x text-muted"></i>
+                                                        <p class="mt-2 text-muted">Sin imagen</p>
+                                                    </div>
+                                                @endif
                                             </div>
                                             <div class="col-12">
                                                 <p><span class="fw-bolder">Código: </span>{{ $menu->id }}</p>

@@ -17,5 +17,5 @@ class Caracteristica extends Model
 
 
 
-    protected $fillable = ['nombre', 'descripcion'];
+    protected $fillable = ['nombre', 'descripcion', 'estado'];
 }

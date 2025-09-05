@@ -16,7 +16,7 @@
 
 @section('content')
 
-
+    @include('layouts.partials.alert')
 
     <div class="container-fluid px-4">
         <h1 class="mt-4 text-center">Ventas</h1>
@@ -90,6 +90,11 @@
                                                 </button>
                                             </form>
                                         @endcan
+
+                                        <a type="button" class="btn btn-secondary"
+                                            href="{{ route('export.pdf-comprobante-venta', ['id' => $item->id]) }}">
+                                            Exportar
+                                        </a>
 
                                         @can('eliminar-venta')
                                             <button type="button" class="btn btn-danger" data-bs-toggle="modal"

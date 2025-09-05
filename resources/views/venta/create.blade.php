@@ -110,7 +110,7 @@
 
                             <!-----botón para agregar--->
                             <div class="col-12 text-end">
-                                <button id="btn_agregar" class="btn btn-primary" type="button">Agregar</button>
+                                <button id="btn_agregar_venta" class="btn btn-primary" type="button">Agregar</button>
                             </div>
 
                             <!-----Tabla para el detalle de la venta--->
@@ -255,9 +255,9 @@
                                 <input readonly type="date" name="fecha" id="fecha"
                                     class="form-control border-success" value="<?php echo date('Y-m-d'); ?>">
                                 <?php
-                                
+
                                 use Carbon\Carbon;
-                                
+
                                 $fecha_hora = Carbon::now()->toDateTimeString();
                                 ?>
                                 <input type="hidden" name="fecha_hora" value="{{ $fecha_hora }}">
@@ -592,9 +592,12 @@
             select.selectpicker('val', '');
             $('#cantidad').val('');
             $('#precio_venta').val('');
-
+            $('#cantidad_menu').val('');
+            $('#precio_producto').val('');
+            $('#precio_menu').val('');
             $('#stock').val('');
         }
+
 
         function showModal(message, icon = 'error') {
             const Toast = Swal.mixin({

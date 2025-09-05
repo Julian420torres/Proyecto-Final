@@ -3,28 +3,26 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreCompraRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
     public function authorize(): bool
     {
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\Rule|array|string>
-     */
     public function rules(): array
     {
         return [
-            
             'comprobante_id' => 'required|exists:comprobantes,id',
-            'numero_comprobante' => 'required|unique:compras,numero_comprobante|max:255',
+            'numero_comprobante' => [
+                'required',
+                'max:255',
+                Rule::unique('compras', 'numero_comprobante')->where(function ($query) {
+                    return $query->where('estado', 1); // Solo verifica compras activas
+                })
+            ],
             'impuesto' => 'required',
             'fecha_hora' => 'required',
             'total' => 'required'

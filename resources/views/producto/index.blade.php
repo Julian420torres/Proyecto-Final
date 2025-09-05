@@ -12,6 +12,8 @@
 
 @section('content')
 
+    @include('layouts.partials.alert')
+
 
     <div class="container-fluid px-4">
         <h1 class="mt-4 text-center">Productos</h1>
@@ -165,12 +167,16 @@
                                                 <div class="col-12">
                                                     <p class="fw-bolder">Imagen:</p>
                                                     <div>
-                                                        @if ($item->img_path != null)
+                                                        @if ($item->img_path)
                                                             <img src="{{ Storage::url('public/productos/' . $item->img_path) }}"
                                                                 alt="{{ $item->nombre }}"
-                                                                class="img-fluid img-thumbnail border border-4 rounded">
+                                                                class="img-fluid img-thumbnail border border-4 rounded"
+                                                                style="max-width: 100%; height: auto;">
                                                         @else
-                                                            <img src="" alt="{{ $item->nombre }}">
+                                                            <div class="text-center py-4 bg-light">
+                                                                <i class="fas fa-image fa-3x text-muted"></i>
+                                                                <p class="mt-2 text-muted">Sin imagen</p>
+                                                            </div>
                                                         @endif
                                                     </div>
                                                 </div>

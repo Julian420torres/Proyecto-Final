@@ -16,12 +16,12 @@ return new class extends Migration
         Schema::create('compras', function (Blueprint $table) {
             $table->id();
             $table->dateTime('fecha_hora');
-            $table->decimal('impuesto',8,2)->unsigned();
-            $table->string('numero_comprobante',255);
-            $table->decimal('total',8,2)->unsigned();
+            $table->decimal('impuesto', 8, 2)->unsigned();
+            $table->string('numero_comprobante', 255);
+            $table->decimal('total', 8, 2)->unsigned();
             $table->tinyInteger('estado')->default(1);
             $table->foreignId('comprobante_id')->nullable()->constrained('comprobantes')->onDelete('set null');
-            
+
             $table->timestamps();
         });
     }
