@@ -21,6 +21,9 @@
 
 # Archivos temporales y de pruebas
 .phpunit.result.cache
+/.phpunit.cache
+/coverage
+*.bak
 Homestead.json
 Homestead.yaml
 auth.json
@@ -35,3 +38,6 @@ yarn-error.log
 # Archivos del sistema
 .DS_Store
 Thumbs.db
+
+# Dependencias de Composer
+/vendor

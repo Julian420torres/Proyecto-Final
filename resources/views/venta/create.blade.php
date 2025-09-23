@@ -255,9 +255,9 @@
                                 <input readonly type="date" name="fecha" id="fecha"
                                     class="form-control border-success" value="<?php echo date('Y-m-d'); ?>">
                                 <?php
-
+                                
                                 use Carbon\Carbon;
-
+                                
                                 $fecha_hora = Carbon::now()->toDateTimeString();
                                 ?>
                                 <input type="hidden" name="fecha_hora" value="{{ $fecha_hora }}">

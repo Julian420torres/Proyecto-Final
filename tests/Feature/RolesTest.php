@@ -47,7 +47,7 @@ class RolesTest extends TestCase
     }
 
     /** @test */
-    public function puede_listar_roles()
+    public function un_usuario_con_permiso_puede_listar_roles()
     {
         Role::create(['name' => 'Editor']);
 
@@ -59,7 +59,7 @@ class RolesTest extends TestCase
     }
 
     /** @test */
-    public function puede_crear_un_rol_con_permisos()
+    public function un_usuario_con_permiso_puede_crear_un_rol()
     {
         $permission = Permission::first();
 
@@ -83,7 +83,7 @@ class RolesTest extends TestCase
     }
 
     /** @test */
-    public function puede_actualizar_un_rol()
+    public function usuario_con_permiso_puede_actualizar_un_rol()
     {
         $role = Role::create(['name' => 'Vendedor']);
         $permission = Permission::first();
@@ -99,7 +99,7 @@ class RolesTest extends TestCase
     }
 
     /** @test */
-    public function puede_eliminar_un_rol()
+    public function usuario_con_permiso_puede_eliminar_un_rol()
     {
         $role = Role::create(['name' => 'Temporal']);
 

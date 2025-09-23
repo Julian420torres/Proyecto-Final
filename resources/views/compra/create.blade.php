@@ -141,6 +141,7 @@
                                 <label for="comprobante_id" class="form-label">Comprobante:</label>
                                 <select name="comprobante_id" id="comprobante_id" class="form-control selectpicker"
                                     title="Selecciona">
+                                    <option value="">Seleccione</option>
                                     @foreach ($comprobantes as $item)
                                         <option value="{{ $item->id }}">{{ $item->tipo_comprobante }}</option>
                                     @endforeach

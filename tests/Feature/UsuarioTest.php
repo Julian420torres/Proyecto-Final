@@ -8,7 +8,7 @@ use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Tests\TestCase;
 
-class UsersTest extends TestCase
+class UsuarioTest extends TestCase
 {
     use RefreshDatabase;
 

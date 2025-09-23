@@ -6,14 +6,11 @@ use App\Http\Requests\StoreCompraRequest;
 use App\Models\Compra;
 use App\Models\Comprobante;
 use App\Models\Producto;
-
 use Exception;
-use Illuminate\Contracts\View\View;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class compraController extends Controller
+class CompraController extends Controller
 {
     function __construct()
     {
@@ -24,12 +21,11 @@ class compraController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * Mostrar listado de compras.
      */
     public function index()
     {
         $compras = Compra::with('comprobante')
-            ->where('estado', 1)
             ->latest()
             ->get();
 
@@ -37,70 +33,57 @@ class compraController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Formulario de creación de compra.
      */
     public function create()
     {
-
-        $comprobantes = Comprobante::all();
+        $comprobantes = Comprobante::where('tipo_comprobante', 'Factura')->get();
         $productos = Producto::where('estado', 1)->get();
         return view('compra.create', compact('comprobantes', 'productos'));
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Guardar una nueva compra.
      */
     public function store(StoreCompraRequest $request)
     {
         try {
             DB::beginTransaction();
 
-            //Llenar tabla compras
+            // Crear la compra
             $compra = Compra::create($request->validated());
 
-            //Llenar tabla compra_producto
-            //1.Recuperar los arrays
+            // Recuperar arrays del request
             $arrayProducto_id = $request->get('arrayidproducto');
             $arrayCantidad = $request->get('arraycantidad');
             $arrayPrecioCompra = $request->get('arraypreciocompra');
             $arrayPrecioVenta = $request->get('arrayprecioventa');
 
-            //2.Realizar el llenado
-            $siseArray = count($arrayProducto_id);
-            $cont = 0;
-            while ($cont < $siseArray) {
-                $compra->productos()->syncWithoutDetaching([
-                    $arrayProducto_id[$cont] => [
-                        'cantidad' => $arrayCantidad[$cont],
-                        'precio_compra' => $arrayPrecioCompra[$cont],
-                        'precio_venta' => $arrayPrecioVenta[$cont]
-                    ]
+            // Guardar en compra_producto
+            $sizeArray = count($arrayProducto_id);
+            for ($i = 0; $i < $sizeArray; $i++) {
+                $compra->productos()->attach($arrayProducto_id[$i], [
+                    'cantidad' => $arrayCantidad[$i],
+                    'precio_compra' => $arrayPrecioCompra[$i],
+                    'precio_venta' => $arrayPrecioVenta[$i]
                 ]);
 
-                //3.Actualizar el stock
-                $producto = Producto::find($arrayProducto_id[$cont]);
-                $stockActual = $producto->stock;
-                $stockNuevo = intval($arrayCantidad[$cont]);
-
-                DB::table('productos')
-                    ->where('id', $producto->id)
-                    ->update([
-                        'stock' => $stockActual + $stockNuevo
-                    ]);
-
-                $cont++;
+                // Actualizar stock
+                $producto = Producto::findOrFail($arrayProducto_id[$i]);
+                $producto->increment('stock', intval($arrayCantidad[$i]));
             }
 
             DB::commit();
+
+            return redirect()->route('compras.index')->with('success', 'Compra registrada');
         } catch (Exception $e) {
             DB::rollBack();
+            return redirect()->route('compras.index')->with('success', 'Error al registrar la compra');
         }
-
-        return redirect()->route('compras.index')->with('success', 'compra exitosa');
     }
 
     /**
-     * Display the specified resource.
+     * Mostrar detalle de una compra.
      */
     public function show(Compra $compra)
     {
@@ -108,31 +91,32 @@ class compraController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
+     * Eliminar compra y revertir stock.
      */
     public function destroy(string $id)
     {
-        Compra::where('id', $id)
-            ->update([
-                'estado' => 0
-            ]);
+        DB::beginTransaction();
+        try {
+            $compra = Compra::findOrFail($id);
 
-        return redirect()->route('compras.index')->with('success', 'Compra eliminada');
+            // Revertir stock
+            foreach ($compra->productos as $producto) {
+                $cantidadComprada = $producto->pivot->cantidad;
+                $producto->decrement('stock', $cantidadComprada);
+            }
+
+            // Eliminar relación en pivote
+            $compra->productos()->detach();
+
+            // Eliminar compra definitivamente
+            $compra->forceDelete();
+
+            DB::commit();
+
+            return redirect()->route('compras.index')->with('success', 'Compra eliminada');
+        } catch (Exception $e) {
+            DB::rollBack();
+            return redirect()->route('compras.index')->with('success', 'No se pudo eliminar la compra, productos utilizados');
+        }
     }
 }

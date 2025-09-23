@@ -26,7 +26,7 @@ class CategoriaTest extends TestCase
     }
 
     /** @test */
-    public function puede_crear_una_nueva_categoria()
+    public function un_usuario_con_permiso_puede_crear_una_nueva_categoria()
     {
         $user = \App\Models\User::factory()->create();
         $permission = Permission::findByName('crear-categoria');
@@ -46,7 +46,7 @@ class CategoriaTest extends TestCase
     }
 
     /** @test */
-    public function puede_actualizar_una_categoria_existente()
+    public function un_usuario_con_permiso_puede_actualizar_una_categoria_existente()
     {
         $user = \App\Models\User::factory()->create();
         $permission = Permission::findByName('editar-categoria');
@@ -80,7 +80,7 @@ class CategoriaTest extends TestCase
     }
 
     /** @test */
-    public function puede_eliminar_una_categoria_cambiando_su_estado_a_inactivo()
+    public function usuario_con_permiso_puede_eliminar_una_categoria_cambiando_su_estado_a_inactivo()
     {
         $user = \App\Models\User::factory()->create();
         $permission = Permission::findByName('eliminar-categoria');
@@ -109,7 +109,7 @@ class CategoriaTest extends TestCase
     /** @test */
     /** @test */
     /** @test */
-    public function test_puede_reactivar_una_categoria_inactiva()
+    public function usuario_con_permiso_puede_reactivar_una_categoria_inactiva()
     {
         $user = \App\Models\User::factory()->create();
         $permission = Permission::findByName('eliminar-categoria');
@@ -163,7 +163,7 @@ class CategoriaTest extends TestCase
     }
 
     /** @test */
-    public function puede_ver_la_lista_de_categorias()
+    public function usuario_con_permiso_puede_ver_la_lista_de_categorias()
     {
         $user = \App\Models\User::factory()->create();
         $permission = Permission::findByName('ver-categoria');

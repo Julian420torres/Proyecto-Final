@@ -88,7 +88,7 @@ class ventaController extends Controller
             $query->where('estado', 1);
         })->get();
 
-        $comprobantes = Comprobante::all();
+        $comprobantes = Comprobante::where('tipo_comprobante', 'Factura')->get();
         $menus = Menu::all();
 
         return view('venta.create', compact('productos', 'clientes', 'comprobantes', 'menus'));

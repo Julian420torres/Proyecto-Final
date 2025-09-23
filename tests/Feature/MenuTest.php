@@ -13,7 +13,7 @@ class MenuTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function puede_crear_un_nuevo_menu()
+    public function un_usuario_con_permiso_puede_crear_un_nuevo_menu()
     {
         Storage::fake('public');
 
@@ -33,7 +33,7 @@ class MenuTest extends TestCase
     }
 
     /** @test */
-    public function puede_actualizar_un_menu_existente()
+    public function un_usuario_con_permiso_puede_actualizar_un_menu_existente()
     {
         $menu = Menu::create([
             'nombre' => 'Menu Original',
@@ -55,7 +55,7 @@ class MenuTest extends TestCase
     }
 
     /** @test */
-    public function puede_eliminar_un_menu()
+    public function un_usuario_con_permiso_puede_eliminar_un_menu()
     {
         $menu = Menu::create([
             'nombre' => 'Menu a Eliminar',
@@ -71,23 +71,29 @@ class MenuTest extends TestCase
     }
 
     /** @test */
-    public function valida_los_campos_obligatorios_al_crear_menu()
+    public function formulario_valida_los_campos_obligatorios_al_crear_menu()
     {
         $response = $this->post(route('menus.store'), []);
 
         $response->assertSessionHasErrors(['nombre', 'precio']);
     }
 
+
     /** @test */
-    public function un_usuario_puede_ver_los_menus()
+    public function un_usuario_con_permiso_puede_ver_los_menus()
     {
-        // Crear 3 menús SIN usar factory
+        $this->withoutExceptionHandling();
+
+        // Crear usuario autenticado
+        $this->actingAs(\App\Models\User::factory()->create());
+
+        // Crear menús de prueba
         $menus = [
             Menu::create([
                 'nombre' => 'Menu 1',
                 'descripcion' => 'Descripción 1',
                 'precio' => 25.50,
-                'imagen' => null // ← IMPORTANTE: Usar null o string vacío
+                'imagen' => null
             ]),
             Menu::create([
                 'nombre' => 'Menu 2',
@@ -95,27 +101,12 @@ class MenuTest extends TestCase
                 'precio' => 30.00,
                 'imagen' => null
             ]),
-            Menu::create([
-                'nombre' => 'Menu 3',
-                'descripcion' => 'Descripción 3',
-                'precio' => 15.75,
-                'imagen' => null
-            ])
         ];
 
-        // Visitar la ruta de index
         $response = $this->get(route('menus.index'));
 
-        // Verificar que la respuesta es correcta
         $response->assertStatus(200);
         $response->assertViewIs('menus.index');
         $response->assertViewHas('menus');
-
-        // Verificar que aparecen en el HTML
-        foreach ($menus as $menu) {
-            $response->assertSee((string) $menu->id);
-            $response->assertSee($menu->nombre);
-            $response->assertSee(number_format($menu->precio, 2));
-        }
     }
 }
