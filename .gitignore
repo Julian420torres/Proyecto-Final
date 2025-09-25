@@ -7,11 +7,23 @@
 /public/storage
 /storage/*.key
 /storage/app/public
-/storage/framework/cache
-/storage/framework/sessions
-/storage/framework/views
-/storage/logs
-/bootstrap/cache
+
+# Storage (ignorar contenido pero mantener estructura)
+storage/app/*
+!storage/app/.gitignore
+
+storage/framework/*
+!storage/framework/.gitignore
+!storage/framework/cache/.gitignore
+!storage/framework/sessions/.gitignore
+!storage/framework/views/.gitignore
+
+storage/logs/*
+!storage/logs/.gitignore
+
+# Bootstrap (ignorar contenido pero mantener estructura)
+bootstrap/cache/*
+!bootstrap/cache/.gitignore
 
 # Entornos
 .env
