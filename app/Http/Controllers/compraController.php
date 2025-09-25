@@ -10,7 +10,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class CompraController extends Controller
+class compraController extends Controller
 {
     function __construct()
     {
