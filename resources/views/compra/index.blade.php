@@ -67,7 +67,7 @@
                                     </div>
                                 </td>
                                 <td>
-                                    {{ number_format($item->total, 2, ',', '.') }}
+                                    {{ number_format($item->total, 3, ',', '.') }}
 
                                 </td>
 

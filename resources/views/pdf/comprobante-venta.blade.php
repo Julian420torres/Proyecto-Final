@@ -125,26 +125,38 @@
                     <th>Unidad</th>
                     <th>Descripción</th>
                     <th>Precio unitario</th>
-                    <th>Total</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($venta->productos as $detalle)
-                    <tr>
-                        <td>{{ $detalle->pivot->cantidad }}</td>
-                        <td>{{ $detalle->nombre }}</td>
-                        <td>{{ $detalle->descripcion ?? $detalle->nombre }}</td>
-                        <td>{{ number_format($detalle->pivot->precio_venta, 2, ',', '.') }}</td>
-                        <td>{{ number_format($detalle->pivot->cantidad * $detalle->pivot->precio_venta, 2, ',', '.') }}
-                        </td>
-                    </tr>
-                @endforeach
+                {{-- Productos --}}
+                @if (isset($venta->productos) && $venta->productos->count() > 0)
+                    @foreach ($venta->productos as $detalle)
+                        <tr>
+                            <td>{{ $detalle->pivot->cantidad }}</td>
+                            <td>{{ $detalle->nombre }}</td>
+                            <td>{{ $detalle->descripcion ?? $detalle->nombre }}</td>
+                            <td>{{ number_format($detalle->pivot->precio_venta, 3, ',', '.') }}</td>
+                        </tr>
+                    @endforeach
+                @endif
+
+                {{-- Menús --}}
+                @if (isset($venta->menus) && $venta->menus->count() > 0)
+                    @foreach ($venta->menus as $menu)
+                        <tr>
+                            <td>{{ $menu->pivot->cantidad ?? 1 }}</td>
+                            <td>{{ $menu->nombre ?? 'Menú' }}</td>
+                            <td>{{ $menu->descripcion ?? '' }}</td>
+                            <td>{{ number_format($menu->pivot->precio_unitario ?? 0, 3, ',', '.') }}</td>
+                        </tr>
+                    @endforeach
+                @endif
             </tbody>
         </table>
 
         <div class="datos totales">
-            <div><strong>Impuesto:</strong> {{ number_format($venta->impuesto, 2, ',', '.') }}</div>
-            <div><strong>Total:</strong> {{ number_format($venta->total, 2, ',', '.') }}</div>
+            <div><strong>Impuesto:</strong> {{ number_format($venta->impuesto, 3, ',', '.') }}</div>
+            <div><strong>Total:</strong> {{ number_format($venta->total, 3, ',', '.') }}</div>
             <div><strong>Cajero:</strong> {{ $venta->user->empleado->razon_social ?? $venta->user->name }}</div>
         </div>
 

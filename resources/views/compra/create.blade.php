@@ -331,7 +331,7 @@
                             '<td><input type="hidden" name="arrayprecioventa[]" value="' + precioVenta + '">' +
                             precioVenta + '</td>' +
                             '<td>' + subtotal[cont].toLocaleString('es-CO', {
-                                minimumFractionDigits: 0,
+                                minimumFractionDigits: 3,
                                 maximumFractionDigits: 3
                             }) + '</td>' +
 
@@ -347,15 +347,15 @@
 
                         //Mostrar los campos calculados
                         $('#sumas').html(sumas.toLocaleString('es-CO', {
-                            minimumFractionDigits: 0,
+                            minimumFractionDigits: 3,
                             maximumFractionDigits: 3
                         }));
                         $('#inc').html(inc.toLocaleString('es-CO', {
-                            minimumFractionDigits: 0,
+                            minimumFractionDigits: 3,
                             maximumFractionDigits: 3
                         }));
                         $('#total').html(total.toLocaleString('es-CO', {
-                            minimumFractionDigits: 0,
+                            minimumFractionDigits: 3,
                             maximumFractionDigits: 3
                         }));
 
@@ -387,15 +387,15 @@
 
             //Mostrar los campos calculados
             $('#sumas').html(sumas.toLocaleString('es-CO', {
-                minimumFractionDigits: 0,
+                minimumFractionDigits: 3,
                 maximumFractionDigits: 3
             }));
             $('#inc').html(inc.toLocaleString('es-CO', {
-                minimumFractionDigits: 0,
+                minimumFractionDigits: 3,
                 maximumFractionDigits: 3
             }));
             $('#total').html(total.toLocaleString('es-CO', {
-                minimumFractionDigits: 0,
+                minimumFractionDigits: 3,
                 maximumFractionDigits: 3
             }));
 

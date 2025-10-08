@@ -255,9 +255,9 @@
                                 <input readonly type="date" name="fecha" id="fecha"
                                     class="form-control border-success" value="<?php echo date('Y-m-d'); ?>">
                                 <?php
-                                
+
                                 use Carbon\Carbon;
-                                
+
                                 $fecha_hora = Carbon::now()->toDateTimeString();
                                 ?>
                                 <input type="hidden" name="fecha_hora" value="{{ $fecha_hora }}">
@@ -347,6 +347,7 @@
             // Aplicar impuestos según los checkbox seleccionados
             inc = $('#aplicar_inc').prop('checked') ? subtotalProductos * (incPorcentaje / 100) : 0;
             iva = $('#aplicar_iva').prop('checked') ? subtotalMenus * (ivaPorcentaje / 100) : 0;
+            console.log("Checkbox IVA cambiado:", $(this).is(':checked'));
 
             let totalImpuesto = inc + iva;
 
@@ -471,7 +472,7 @@
                 fila +=
                     `<td><input type="hidden" name="arraycantidadproducto[]" value="${cantidadProducto}">${cantidadProducto}</td>`;
                 fila +=
-                    `<td><input type="hidden" name="arrayprecioventaproducto[]" value="${precioProducto}">${precioProducto}</td>`;
+                    `<td><input type="hidden" name="arrayprecioventaproducto[]" value="${precioProducto}">${parseFloat(precioProducto).toFixed(3)}</td>`;
             } else {
                 fila += `<td>-</td><td>-</td><td>-</td>`;
             }
@@ -479,12 +480,14 @@
             if (idMenu) {
                 fila += `<td><input type="hidden" name="arrayidmenu[]" value="${idMenu}">${nameMenu}</td>`;
                 fila += `<td><input type="hidden" name="arraycantidadmenu[]" value="${cantidadMenu}">${cantidadMenu}</td>`;
-                fila += `<td><input type="hidden" name="arrayprecioventamenu[]" value="${precioMenu}">${precioMenu}</td>`;
+                fila +=
+                    `<td><input type="hidden" name="arrayprecioventamenu[]" value="${precioMenu}">${parseFloat(precioMenu).toFixed(3)}</td>`;
             } else {
                 fila += `<td>-</td><td>-</td><td>-</td>`;
             }
 
-            fila += `<td><input type="hidden" name="arrayprecioventa[]" value="${subtotalVenta}">${subtotalVenta}</td>`;
+            fila +=
+                `<td><input type="hidden" name="arrayprecioventa[]" value="${subtotalVenta}">${parseFloat(subtotalVenta).toFixed(3)}</td>`;
             fila +=
                 `<td><button class="btn btn-danger" type="button" onClick="eliminarProducto(${cont})"><i class="fa-solid fa-trash"></i></button></td>`;
             fila += `</tr>`;
@@ -494,13 +497,14 @@
             limpiarCampos();
             cont++;
 
+
             // Actualizar totales
-            $('#sumas').html(sumas.toFixed(2));
-            $('#inc').html(inc.toFixed(2));
-            $('#iva').html(ivaAplicado.toFixed(2));
-            $('#total').html(total.toFixed(2));
-            $('#impuesto').val(inc.toFixed(2));
-            $('#inputTotal').val(total.toFixed(2));
+            $('#sumas').html(sumas.toFixed(3));
+            $('#inc').html(inc.toFixed(3));
+            $('#iva').html(ivaAplicado.toFixed(3));
+            $('#total').html(total.toFixed(3));
+            $('#impuesto').val(inc.toFixed(3));
+            $('#inputTotal').val(total.toFixed(3));
 
             console.log("🔹 Sumas:", sumas, "INC:", inc, "IVA:", ivaAplicado, "Total:", total);
 

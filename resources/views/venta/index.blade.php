@@ -78,7 +78,8 @@
                                     {{ $item->user->name }}
                                 </td>
                                 <td>
-                                    {{ $item->total }}
+                                    {{ number_format($item->total, 3, ',', '.') }}
+
                                 </td>
                                 <td>
                                     <div class="btn-group" role="group" aria-label="Basic mixed styles example">

@@ -32,8 +32,8 @@ class VentasExport implements FromCollection, WithMapping, WithHeadings, ShouldA
             $venta->numero_comprobante,
             Carbon::parse($venta->fecha_hora)->format('d/m/Y'),
             Carbon::parse($venta->fecha_hora)->format('h:i A'),
-            $venta->impuesto,
-            $venta->total
+            number_format($venta->impuesto, 3, ',', '.'),
+            number_format($venta->total, 3, ',', '.')
         ];
     }
     public function headings(): array
