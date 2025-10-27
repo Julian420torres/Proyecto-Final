@@ -97,12 +97,7 @@
                     </div>
                 @endcan
 
-                @can('ver-categoria')
-                    <a class="nav-link" href="{{ route('categorias.index') }}">
-                        <div class="sb-nav-link-icon"><i class="fa-solid fa-layer-group"></i></div>
-                        Categorías
-                    </a>
-                @endcan
+
 
                 @can('ver-menu')
                     <a class="nav-link" href="{{ route('menus.index') }}">
@@ -119,6 +114,13 @@
                     <a class="nav-link" href="{{ route('productos.index') }}">
                         <div class="sb-nav-link-icon"><i class="fa-solid fa-box-open"></i></div>
                         Productos
+                    </a>
+                @endcan
+
+                @can('ver-categoria')
+                    <a class="nav-link" href="{{ route('categorias.index') }}">
+                        <div class="sb-nav-link-icon"><i class="fa-solid fa-layer-group"></i></div>
+                        Categorías
                     </a>
                 @endcan
 
