@@ -116,7 +116,7 @@ class compraController extends Controller
             return redirect()->route('compras.index')->with('success', 'Compra eliminada');
         } catch (Exception $e) {
             DB::rollBack();
-            return redirect()->route('compras.index')->with('success', 'No se pudo eliminar la compra, productos utilizados');
+            return redirect()->route('compras.index')->with('error', 'No se pudo eliminar la compra, productos utilizados');
         }
     }
 }
